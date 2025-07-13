@@ -57,7 +57,8 @@ function playGame() {
 
   if (humanScore > computerScore) {
     alert("You reached 5 points first. You win the game.");
-  } else {
+  } 
+  else {
     alert("The computer reached 5 points first. You lose the game.");
   }
 }
