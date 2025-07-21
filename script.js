@@ -2,23 +2,8 @@ let humanScore = 0;
 let computerScore = 0;
 
 function getComputerChoice() {
-  const n = Math.random() * 100 + 1;
-  if (n < 34) return "rock";
-  else if (n < 67) return "paper";
-  else return "scissors";
-}
-
-function getHumanChoice() {
-  const input = prompt("Enter rock, paper, or scissors:")
-                  .trim()
-                  .toLowerCase();
-  if (["rock", "paper", "scissors"].includes(input)) {
-    return input;
-  } 
-  else {
-    alert("Invalid input. Please type rock, paper, or scissors.");
-    return getHumanChoice();
-  }
+  const choices = ['rock', 'paper', 'scissors'];
+  return choices[Math.floor(Math.random() * 3)];
 }
 
 function playRound(playerChoice, computerChoice) {
@@ -41,23 +26,31 @@ function playRound(playerChoice, computerChoice) {
   }
 }
 
-function playGame() {
-  humanScore = 0;
-  computerScore = 0;
+function updateDisplay(resultMessage) {
+  const resultDiv = document.getElementById("result");
+  const scoreDiv = document.getElementById("score");
 
-  while (humanScore < 5 && computerScore < 5) {
-    const player = getHumanChoice();
-    const computer = getComputerChoice();
+  resultDiv.textContent = resultMessage;
+  scoreDiv.textContent = `Player: ${humanScore} | Computer: ${computerScore}`;
 
-    alert(
-      playRound(player, computer) +
-      `\n\nScore:\nYou: ${humanScore}\nComputer: ${computerScore}`
-    );
-  }
-
-  if (humanScore > computerScore) {
-    alert("You reached 5 points first. You win the game.");
-  } else {
-    alert("The computer reached 5 points first. You lose the game.");
+  if (humanScore === 5 || computerScore === 5) {
+    const finalMsg = humanScore === 5 ? "You win the game!" : "Computer wins the game!";
+    resultDiv.textContent = finalMsg;
+    disableButtons();
   }
 }
+
+function disableButtons() {
+  document.querySelectorAll("button[data-choice]").forEach(btn => {
+    btn.disabled = true;
+  });
+}
+
+document.querySelectorAll("button[data-choice]").forEach(button => {
+  button.addEventListener("click", function () {
+    const playerChoice = this.getAttribute("data-choice");
+    const computerChoice = getComputerChoice();
+    const result = playRound(playerChoice, computerChoice);
+    updateDisplay(result);
+  });
+});
