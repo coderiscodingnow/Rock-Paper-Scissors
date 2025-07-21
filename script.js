@@ -40,6 +40,7 @@ function updateDisplay(resultMessage) {
   }
 }
 
+<<<<<<< HEAD
 function disableButtons() {
   document.querySelectorAll("button[data-choice]").forEach(btn => {
     btn.disabled = true;
@@ -54,3 +55,15 @@ document.querySelectorAll("button[data-choice]").forEach(button => {
     updateDisplay(result);
   });
 });
+
+
+=======
+  function checkWinner() {
+  if (humanScore > computerScore) {
+    alert("You reached 5 points first. You win the game.");
+  } 
+  else {
+    alert("The computer reached 5 points first. You lose the game.");
+  }
+}
+>>>>>>> f5c314d7191a14858c28cb515f6ae6be741b1785
